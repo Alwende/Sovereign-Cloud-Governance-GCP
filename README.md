@@ -56,3 +56,8 @@ The entire environment is 100% declarative and was provisioned using the followi
 
 ---
 *Developed for the Wakwetu Executive Project Portfolio.*
+
+## 📸 Architectural Evidence (Terraform Render)
+This diagram is auto-generated directly from the Terraform state, ensuring 100% parity between the documentation and the live environment.
+
+![Enterprise Architecture](./screenshots/enterprise_architecture.png)
