@@ -74,3 +74,19 @@ resource "google_compute_firewall" "allow_google_apis_egress" {
 
   destination_ranges = ["199.36.153.4/30"] # Restricted Google API Range
 }
+
+# 8. ARCHITECTURAL OUTPUTS (The Auditor's View)
+output "vpc_self_link" {
+  description = "The URI of the Zero-Trust VPC"
+  value       = google_compute_network.zero_trust_vpc.self_link
+}
+
+output "secure_subnet_gateway" {
+  description = "The internal gateway for the secure subnet"
+  value       = google_compute_subnetwork.secure_subnet.gateway_address
+}
+
+output "auditor_service_account" {
+  description = "The email of the hardened auditor account"
+  value       = google_service_account.auditor_sa.email
+}

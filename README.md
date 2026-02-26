@@ -1,33 +1,37 @@
 # Enterprise Zero-Trust Governance Shield (GCP)
+**Lead Architect:** Dan Alwende, PMP
 
-An executive-level architectural implementation of **Zero-Trust Security** on Google Cloud Platform, codified via **Terraform**.
+## 🏗️ Technical Architecture (Live Render)
+```mermaid
+graph TD
+    subgraph "Google Cloud Platform"
+        VPC[wakwetu-zero-trust-vpc]
+        Subnet[wakwetu-secure-subnet-us-east1]
+        IAP[Identity-Aware Proxy Tunnel]
+        FW1[allow-iap-ingress: Port 22/3389]
+        FW2[deny-all-egress: 0.0.0.0/0]
+        FW3[allow-google-apis-egress: Port 443]
+        SA[wakwetu-security-auditor]
 
-## 🏗️ Architectural Overview
-This project demonstrates a "Sovereign Architect" approach to cloud security, moving beyond vendor-specific defaults to a custom-hardened governance model.
+        VPC --> Subnet
+        Subnet --> IAP
+        IAP --> FW1
+        VPC --> FW2
+        FW2 -.-> FW3
+        SA -- "IAM: Security Reviewer" --> VPC
+    end
+```
 
-### Key Features:
-- **Global VPC Architecture:** Custom-mode networking with Private Google Access.
-- **Identity-Aware Proxy (IAP):** Secure management without public IP addresses.
-- **Egress Guardrails:** A "Default-Deny" outbound policy with surgical access to Google APIs.
-- **Least Privilege IAM:** Automated Service Account provisioning with audited permissions.
+## 🛡️ Security Posture (Zero-Trust)
+- **Identity-as-the-Perimeter:** Management access restricted to Google IAP.
+- **Data Exfiltration Shield:** Default-deny egress posture with restricted API routing.
+- **Private Google Access:** Direct VPC-to-API communication (No Public IPs).
 
-## 🛠️ Tech Stack
-- **Cloud:** Google Cloud Platform (GCP)
-- **IaC:** Terraform
-- **Networking:** Global VPC, IAP, Cloud DNS
-- **Security:** IAM Conditions, Firewall Guardrails
-
-## 📁 Project Structure
-- `main.tf`: Core infrastructure logic (VPC, IAM, Firewalls).
-- `providers.tf`: Multi-cloud factory configuration.
-- `Project_Charter_GCP_ZeroTrust.md`: Formal project authorization.
-- `Project_Closure_Report.md`: Executive value realization.
-
-## 🚀 Deployment
+## 🚀 Governance Execution
 ```bash
 terraform init
 terraform apply
 ```
 
 ---
-**Lead Architect:** Dan Alwende, PMP
+*Verified by the Sovereign Architecture Factory.*
